@@ -1,0 +1,185 @@
+/* ===================== CHUNG ===================== */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f4f5f7;
+  color: #222;
+}
+.an { display: none !important; }
+.loi { color: #d32f2f; font-size: 13px; display: block; min-height: 16px; }
+.dung { border-color: #2e7d32 !important; }
+.sai { border-color: #d32f2f !important; }
+
+.btn {
+  background-color: #6a1b9a;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn:hover { background-color: #FF3300; }
+.btn-phu { background-color: #757575; }
+
+/* ===================== HEADER + MENU (Câu 2) ===================== */
+.header {
+  position: relative;          /* để mini-cart (absolute) bám theo header */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background-color: purple;
+  color: white;
+  padding: 10px 20px;
+}
+.header h1 { font-size: 20px; margin: 6px 0; }
+.logo { color: white; font-size: 24px; font-weight: bold; text-decoration: none; }
+.menu ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; }
+.menu li a { display: block; color: white; text-decoration: none; padding: 10px 14px; }
+.menu li a:hover { background-color: #FF3300; }
+.header-phai { display: flex; align-items: center; gap: 10px; }
+.btn-gio { background: white; color: purple; border: none; padding: 8px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+
+/* ===================== BỐ CỤC: ASIDE + MAIN ===================== */
+.bo-cuc {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 20px;
+  padding: 20px;
+}
+.thanh-ben fieldset { background: white; border: 1px solid #ddd; border-radius: 6px; padding: 12px; }
+.thanh-ben legend { font-weight: bold; color: purple; }
+.thanh-ben label { display: block; margin-top: 10px; font-size: 14px; }
+.thanh-ben input, .thanh-ben select { width: 100%; padding: 6px; margin-top: 4px; }
+.thanh-ben input:invalid { border-color: #d32f2f; }
+.hang-2 { display: flex; gap: 6px; }
+.thanh-ben .btn { margin-top: 10px; }
+main h2 { margin-top: 0; }
+
+/* ===================== CÂU 3: CSS GRID + RESPONSIVE ===================== */
+.luoi-san-pham {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);   /* Desktop: 4 cột */
+  gap: 16px;
+}
+@media (max-width: 1024px) {               /* Tablet: 2 cột */
+  .luoi-san-pham { grid-template-columns: repeat(2, 1fr); }
+  .bo-cuc { grid-template-columns: 220px 1fr; }
+}
+@media (max-width: 600px) {                /* Mobile: 1 cột */
+  .luoi-san-pham { grid-template-columns: 1fr; }
+  .bo-cuc { grid-template-columns: 1fr; padding: 10px; }
+}
+
+/* Thẻ sản phẩm */
+.the-sp {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.khung-anh { position: relative; height: 180px; display: flex; align-items: center; justify-content: center; }
+.khung-anh img { max-width: 100%; max-height: 180px; object-fit: contain; }
+.the-sp h3 { font-size: 15px; margin: 0; height: 38px; overflow: hidden; }
+.gia { color: #d32f2f; font-weight: bold; font-size: 18px; }
+.ton-kho { font-size: 13px; color: #555; }
+.chon-mau, .chon-size { display: flex; flex-wrap: wrap; gap: 4px; }
+.chon-mau button, .chon-size button {
+  border: 1px solid #aaa; background: white; padding: 3px 8px; border-radius: 12px; cursor: pointer; font-size: 12px;
+}
+.chon-mau button.chon, .chon-size button.chon { background: purple; color: white; border-color: purple; }
+.nut-sp { display: flex; gap: 6px; margin-top: auto; }
+.nut-sp .btn { flex: 1; font-size: 13px; }
+
+/* CÂU 5: số sao trung bình chèn đè lên ảnh */
+.sao-tb {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  background: rgba(255, 193, 7, 0.95);
+  color: #333;
+  font-weight: bold;
+  font-size: 13px;
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+.link-rating { background: none; border: none; color: #6a1b9a; text-decoration: underline; cursor: pointer; padding: 0; text-align: left; }
+
+/* ===================== CÂU 3: SKELETON LOADING ===================== */
+.skeleton .khung-anh,
+.skeleton .dong-xam {
+  background: linear-gradient(90deg, #e0e0e0 25%, #f5f5f5 50%, #e0e0e0 75%);
+  background-size: 200% 100%;
+  animation: lap-lanh 1.2s infinite linear;
+  border-radius: 4px;
+}
+.skeleton .dong-xam { height: 14px; }
+.skeleton .ngan { width: 60%; }
+@keyframes lap-lanh {
+  from { background-position: 200% 0; }
+  to   { background-position: -200% 0; }
+}
+
+/* ===================== CÂU 6: MINI-CART ===================== */
+.mini-cart {
+  position: absolute;   /* nổi đè lên nội dung trang */
+  top: 100%;
+  right: 20px;
+  z-index: 1000;        /* luôn nằm trên cùng */
+  width: 480px;
+  max-width: calc(100vw - 20px);
+  background: white;
+  color: #222;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  padding: 12px;
+}
+.mini-cart h3 { margin-top: 0; }
+.mini-cart table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.mini-cart th, .mini-cart td { border-bottom: 1px solid #eee; padding: 4px; text-align: left; }
+.mini-cart input[type=number] { width: 50px; }
+.tong { text-align: right; }
+
+/* ===================== MODAL (Xem nhanh / Rating / Thanh toán) ===================== */
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+.modal-noi-dung {
+  position: relative;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  width: 560px;
+  max-width: 100%;
+  max-height: 90vh;
+  overflow: auto;
+}
+.modal-noi-dung img { max-width: 160px; float: left; margin-right: 12px; }
+.dong { position: absolute; top: 6px; right: 10px; border: none; background: none; font-size: 26px; cursor: pointer; }
+#formThanhToan label, .modal label { display: block; margin-top: 8px; }
+#formThanhToan input, #formThanhToan textarea { width: 100%; padding: 6px; border: 1px solid #aaa; border-radius: 4px; }
+.dang-nhap-nhanh { display: flex; flex-wrap: wrap; gap: 6px; background: #f3e5f5; padding: 8px; border-radius: 4px; }
+.dang-nhap-nhanh input { flex: 1; min-width: 120px; padding: 6px; }
+table.bang { width: 100%; border-collapse: collapse; }
+table.bang th, table.bang td { border: 1px solid #ccc; padding: 6px; text-align: left; }
+table.bang th { background: #f3e5f5; }
+
+/* ===================== FOOTER ===================== */
+.footer { background: #333; color: white; text-align: center; padding: 12px; margin-top: 20px; }
+
+/* ===================== TRANG CÔNG CỤ CÂU 1 ===================== */
+.cong-cu { padding: 20px; }
+.cong-cu textarea { width: 100%; font-family: monospace; font-size: 12px; }

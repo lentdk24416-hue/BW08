@@ -1,0 +1,9 @@
+{
+  "customers": [
+    { "id": "KH01", "username": "an", "password": "123456", "hoTen": "Phạm Minh An", "email": "an.pm@gmail.com", "sdt": "0938111222", "diaChi": "12 Nguyễn Huệ, Q.1, TP.HCM" },
+    { "id": "KH02", "username": "binh", "password": "123456", "hoTen": "Võ Thanh Bình", "email": "binh.vt@gmail.com", "sdt": "0977333444", "diaChi": "45 Lê Lợi, Thủ Đức, TP.HCM" },
+    { "id": "KH03", "username": "chi", "password": "123456", "hoTen": "Đỗ Ngọc Chi", "email": "chi.dn@gmail.com", "sdt": "0365555666", "diaChi": "8 Trần Phú, Hà Đông, Hà Nội" },
+    { "id": "KH04", "username": "dung", "password": "123456", "hoTen": "Huỳnh Tiến Dũng", "email": "dung.ht@gmail.com", "sdt": "0868777888", "diaChi": "99 Hùng Vương, Hải Châu, Đà Nẵng" },
+    { "id": "KH05", "username": "em", "password": "123456", "hoTen": "Ngô Thị Em", "email": "em.nt@gmail.com", "sdt": "0559999000", "diaChi": "3 Ninh Kiều, Cần Thơ" }
+  ]
+}

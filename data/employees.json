@@ -1,0 +1,7 @@
+{
+  "employees": [
+    { "id": "NV01", "username": "admin", "password": "admin123", "hoTen": "Nguyễn Văn Quản", "chucVu": "Quản trị viên", "role": "admin", "email": "admin@shop.vn", "sdt": "0901234567" },
+    { "id": "NV02", "username": "nhanvien1", "password": "nv123", "hoTen": "Trần Thị Bán", "chucVu": "Nhân viên bán hàng", "role": "staff", "email": "ban.tt@shop.vn", "sdt": "0912345678" },
+    { "id": "NV03", "username": "nhanvien2", "password": "nv123", "hoTen": "Lê Văn Kho", "chucVu": "Nhân viên kho", "role": "staff", "email": "kho.lv@shop.vn", "sdt": "0987654321" }
+  ]
+}

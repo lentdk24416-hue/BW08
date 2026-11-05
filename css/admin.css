@@ -1,0 +1,31 @@
+/* ===================== CÂU 8: GIAO DIỆN ADMIN ===================== */
+.dang-nhap { display: flex; justify-content: center; padding: 60px 16px; }
+.dang-nhap form { width: 340px; max-width: 100%; }
+.dang-nhap fieldset { background: white; border: 1px solid #ddd; border-radius: 6px; padding: 16px; }
+.dang-nhap legend { font-weight: bold; color: purple; }
+.dang-nhap label { display: block; margin-top: 10px; }
+.dang-nhap input { width: 100%; padding: 8px; margin-top: 4px; }
+.dang-nhap .btn { margin-top: 10px; width: 100%; }
+
+.dashboard { padding: 20px; }
+.dashboard section { background: white; border-radius: 8px; padding: 14px; margin-top: 16px; }
+.the-thong-ke {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.the-thong-ke div { background: white; border-left: 5px solid purple; border-radius: 6px; padding: 12px; }
+.the-thong-ke span { display: block; color: #666; font-size: 13px; }
+.the-thong-ke b { font-size: 24px; }
+@media (max-width: 800px) { .the-thong-ke { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .the-thong-ke { grid-template-columns: 1fr; } }
+
+.cuon { overflow-x: auto; }
+.bang td small { color: #666; }
+
+/* Biểu đồ cột ngang làm bằng CSS thuần (width theo %) */
+.bieu-do .hang { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+.bieu-do .ten { width: 220px; font-size: 13px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.bieu-do .thanh { height: 18px; background: purple; border-radius: 3px; }
+.bieu-do .so { font-size: 13px; }
+@media (max-width: 600px) { .bieu-do .ten { width: 110px; } }

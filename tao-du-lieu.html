@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Câu 1 - Tạo products.xml từ FakeStoreAPI</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="trang-cong-cu">
+  <header class="header">
+    <h1>Câu 1: Đọc FakeStoreAPI → bổ sung màu sắc, tồn kho → xuất products.xml</h1>
+  </header>
+
+  <main class="cong-cu">
+    <p>Bấm nút để tải dữ liệu từ <b>https://fakestoreapi.com/products</b>, dùng DOM tạo cây XML,
+      bổ sung <code>colors</code> (màu + tồn kho theo màu) và <code>stock</code>, sau đó tải file về và chép vào thư mục <code>data/</code>.</p>
+    <button type="button" class="btn" onclick="taiTuAPI()">1. Tải dữ liệu từ API</button>
+    <button type="button" class="btn btn-phu" onclick="taiFileXML()">2. Tải file products.xml</button>
+    <p id="trangThai"></p>
+    <textarea id="ketQua" rows="25" readonly></textarea>
+  </main>
+
+  <footer class="footer">
+    <p>Sinh viên: <b>Nguyễn Trần Đan Lê</b> - MSSV: <b>K244161794</b></p>
+  </footer>
+
+  <script>
+    // Bảng màu gợi ý theo danh mục
+    var MAU_THEO_DANH_MUC = {
+      "men's clothing": ["Đen", "Xanh navy", "Xám"],
+      "women's clothing": ["Trắng", "Hồng", "Đen"],
+      "jewelery": ["Vàng", "Bạc", "Vàng hồng"],
+      "electronics": ["Đen", "Bạc"]
+    };
+    var SIZE_THEO_DANH_MUC = {
+      "men's clothing": "S,M,L,XL",
+      "women's clothing": "S,M,L"
+    };
+    var xmlDoc = null;
+
+    // Hàm tiện ích: tạo 1 thẻ con có nội dung text rồi gắn vào thẻ cha (createElement + appendChild)
+    function themTheText(doc, cha, tenThe, giaTri) {
+      var the = doc.createElement(tenThe);
+      the.appendChild(doc.createTextNode(giaTri));
+      cha.appendChild(the);
+      return the;
+    }
+
+    function taiTuAPI() {
+      var trangThai = document.getElementById("trangThai");
+      trangThai.innerHTML = "Đang tải...";
+      var xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+          if (xhr.status == 200) {
+            var dsSanPham = JSON.parse(xhr.responseText); // API trả về JSON
+            taoXML(dsSanPham);
+            trangThai.innerHTML = "Đã tạo XML cho " + dsSanPham.length + " sản phẩm.";
+          } else {
+            trangThai.innerHTML = "Không tải được API (mã lỗi " + xhr.status + ").";
+          }
+        }
+      };
+      xhr.open("GET", "https://fakestoreapi.com/products", true);
+      xhr.send();
+    }
+
+    function taoXML(dsSanPham) {
+      // Tạo tài liệu XML rỗng có thẻ gốc <products>
+      xmlDoc = document.implementation.createDocument(null, "products", null);
+      var goc = xmlDoc.documentElement;
+
+      for (var i = 0; i < dsSanPham.length; i++) {
+        var sp = dsSanPham[i];
+        var theSP = xmlDoc.createElement("product");
+        theSP.setAttribute("id", sp.id);
+
+        themTheText(xmlDoc, theSP, "title", sp.title);
+        themTheText(xmlDoc, theSP, "price", sp.price);
+        themTheText(xmlDoc, theSP, "description", sp.description);
+        themTheText(xmlDoc, theSP, "category", sp.category);
+        themTheText(xmlDoc, theSP, "image", sp.image);
+
+        var rating = xmlDoc.createElement("rating");
+        rating.setAttribute("rate", sp.rating.rate);
+        rating.setAttribute("count", sp.rating.count);
+        theSP.appendChild(rating);
+
+        // BỔ SUNG: màu sắc + tồn kho theo từng màu
+        var dsMau = MAU_THEO_DANH_MUC[sp.category] || ["Đen"];
+        var colors = xmlDoc.createElement("colors");
+        var tongTon = 0;
+        for (var k = 0; k < dsMau.length; k++) {
+          var ton = Math.floor(Math.random() * 25) + 3; // 3..27
+          tongTon = tongTon + ton;
+          var color = xmlDoc.createElement("color");
+          color.setAttribute("name", dsMau[k]);
+          color.setAttribute("stock", ton);
+          colors.appendChild(color);
+        }
+        theSP.appendChild(colors);
+        if (SIZE_THEO_DANH_MUC[sp.category]) {
+          themTheText(xmlDoc, theSP, "sizes", SIZE_THEO_DANH_MUC[sp.category]);
+        }
+        themTheText(xmlDoc, theSP, "stock", tongTon);
+
+        goc.appendChild(theSP);
+      }
+
+      var chuoiXML = '<?xml version="1.0" encoding="UTF-8"?>\n' + new XMLSerializer().serializeToString(xmlDoc);
+      document.getElementById("ketQua").value = chuoiXML;
+    }
+
+    // Lưu thành file products.xml (trình duyệt không tự ghi vào ổ đĩa nên phải tải về)
+    function taiFileXML() {
+      var noiDung = document.getElementById("ketQua").value;
+      if (noiDung == "") { alert("Hãy bấm bước 1 trước!"); return; }
+      var blob = new Blob([noiDung], { type: "text/xml" });
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "products.xml";
+      a.click();
+    }
+  </script>
+</body>
+</html>

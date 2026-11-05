@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Mỗi hóa đơn: mã hóa đơn, ngày tạo, nhân viên, khách hàng, chi tiết hóa đơn -->
+<carts>
+  <hoaDon maHD="HD001" ngayTao="2026-10-01" trangThai="Đã giao">
+    <nhanVien>NV02</nhanVien>
+    <khachHang>KH01</khachHang>
+    <chiTiet>
+      <sanPham id="1" mauSac="Đen" size="M" soLuong="1" donGia="109.95"/>
+      <sanPham id="9" mauSac="Đen" size="" soLuong="2" donGia="64"/>
+    </chiTiet>
+  </hoaDon>
+  <hoaDon maHD="HD002" ngayTao="2026-10-05" trangThai="Đã giao">
+    <nhanVien>NV02</nhanVien>
+    <khachHang>KH02</khachHang>
+    <chiTiet>
+      <sanPham id="5" mauSac="Vàng" size="" soLuong="1" donGia="695"/>
+    </chiTiet>
+  </hoaDon>
+  <hoaDon maHD="HD003" ngayTao="2026-10-12" trangThai="Đang giao">
+    <nhanVien>NV03</nhanVien>
+    <khachHang>KH03</khachHang>
+    <chiTiet>
+      <sanPham id="18" mauSac="Hồng" size="S" soLuong="3" donGia="9.85"/>
+      <sanPham id="20" mauSac="Trắng" size="M" soLuong="2" donGia="12.99"/>
+    </chiTiet>
+  </hoaDon>
+  <hoaDon maHD="HD004" ngayTao="2026-10-20" trangThai="Chờ xử lý">
+    <nhanVien>NV02</nhanVien>
+    <khachHang>KH04</khachHang>
+    <chiTiet>
+      <sanPham id="14" mauSac="Đen" size="" soLuong="1" donGia="999.99"/>
+      <sanPham id="10" mauSac="Bạc" size="" soLuong="1" donGia="109"/>
+    </chiTiet>
+  </hoaDon>
+  <hoaDon maHD="HD005" ngayTao="2026-11-01" trangThai="Đã giao">
+    <nhanVien>NV03</nhanVien>
+    <khachHang>KH01</khachHang>
+    <chiTiet>
+      <sanPham id="3" mauSac="Xám" size="L" soLuong="1" donGia="55.99"/>
+      <sanPham id="2" mauSac="Đen" size="M" soLuong="2" donGia="22.3"/>
+    </chiTiet>
+  </hoaDon>
+</carts>

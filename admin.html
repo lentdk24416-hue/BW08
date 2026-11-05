@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BW08 Shop - Quản trị</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <header class="header">
+    <a href="index.html" class="logo">BW08 Admin</a>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">Về trang bán hàng</a></li>
+        <li><a href="#" onclick="dangXuat(); return false;" id="nutDangXuat" class="an">Đăng xuất</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- MÀN HÌNH ĐĂNG NHẬP -->
+  <section id="manHinhDangNhap" class="dang-nhap">
+    <form id="formDangNhap">
+      <fieldset>
+        <legend>Đăng nhập quản trị</legend>
+        <label for="user">Tên đăng nhập</label>
+        <input type="text" id="user" required placeholder="admin">
+        <label for="pass">Mật khẩu</label>
+        <input type="password" id="pass" required placeholder="admin123">
+        <p class="loi" id="loiDangNhap"></p>
+        <button type="submit" class="btn">Đăng nhập</button>
+      </fieldset>
+    </form>
+  </section>
+
+  <!-- DASHBOARD -->
+  <main id="dashboard" class="dashboard an">
+    <h2>Xin chào, <span id="tenNV"></span></h2>
+
+    <div class="the-thong-ke">
+      <div><span>Tổng đơn hàng</span><b id="tkDon">0</b></div>
+      <div><span>Doanh thu</span><b id="tkDoanhThu">$0</b></div>
+      <div><span>Sản phẩm đã bán</span><b id="tkSoSP">0</b></div>
+      <div><span>Khách hàng</span><b id="tkKhach">0</b></div>
+    </div>
+
+    <section>
+      <h3>Danh sách đơn hàng</h3>
+      <label>Lọc trạng thái:
+        <select id="locTrangThai" onchange="veBangDon()">
+          <option value="">Tất cả</option>
+          <option>Chờ xử lý</option><option>Đang giao</option><option>Đã giao</option><option>Đã hủy</option>
+        </select>
+      </label>
+      <div class="cuon"><table class="bang">
+        <thead><tr><th>Mã HĐ</th><th>Ngày tạo</th><th>Khách hàng</th><th>Nhân viên</th><th>Chi tiết</th><th>Tổng tiền</th><th>Trạng thái</th></tr></thead>
+        <tbody id="bangDon"></tbody>
+      </table></div>
+    </section>
+
+    <section>
+      <h3>Sản phẩm bán chạy</h3>
+      <div id="bieuDo" class="bieu-do"></div>
+    </section>
+
+    <section>
+      <h3>Doanh thu theo nhân viên</h3>
+      <div class="cuon"><table class="bang">
+        <thead><tr><th>Mã NV</th><th>Họ tên</th><th>Chức vụ</th><th>Số đơn</th><th>Doanh thu</th></tr></thead>
+        <tbody id="bangNV"></tbody>
+      </table></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Sinh viên: <b>Nguyễn Trần Đan Lê</b> - MSSV: <b>K244161794</b></p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

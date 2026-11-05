@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BW08 Shop - Danh sách sản phẩm</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- ===== CÂU 2: LAYOUT SEMANTIC HTML5 ===== -->
+  <header class="header">
+    <a href="index.html" class="logo">BW08 Shop</a>
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">Trang chủ</a></li>
+        <li><a href="#dsSanPham">Sản phẩm</a></li>
+        <li><a href="tao-du-lieu.html">Tạo dữ liệu (Câu 1)</a></li>
+        <li><a href="admin.html">Quản trị</a></li>
+      </ul>
+    </nav>
+    <div class="header-phai">
+      <span id="xinChao"></span>
+      <button type="button" id="nutGioHang" class="btn-gio" onclick="cart.batTat()">
+        Giỏ hàng (<span id="soLuongGio">0</span>)
+      </button>
+    </div>
+
+    <!-- CÂU 6: Mini-cart nổi đè lên trang (position: absolute + z-index) -->
+    <div id="miniCart" class="mini-cart an">
+      <h3>Giỏ hàng</h3>
+      <table>
+        <thead>
+          <tr><th>Sản phẩm</th><th>Phân loại</th><th>SL</th><th>Thành tiền</th><th></th></tr>
+        </thead>
+        <tbody id="bangGio"></tbody>
+      </table>
+      <p class="tong">Tổng tiền: <b id="tongTien">$0.00</b></p>
+      <button type="button" class="btn" onclick="moThanhToan()">Thanh toán</button>
+    </div>
+  </header>
+
+  <div class="bo-cuc">
+    <!-- Form tìm kiếm nâng cao ở thanh bên -->
+    <aside class="thanh-ben">
+      <form id="formTim" novalidate>
+        <fieldset>
+          <legend>Tìm kiếm nâng cao</legend>
+
+          <label for="tuKhoa">Từ khóa</label>
+          <input type="search" id="tuKhoa" name="tuKhoa" placeholder="VD: jacket"
+                 maxlength="50" pattern="[A-Za-zÀ-ỹ0-9\s'\-]*" title="Chỉ gồm chữ, số, khoảng trắng">
+
+          <label for="danhMuc">Danh mục</label>
+          <select id="danhMuc" name="danhMuc" required>
+            <option value="tatca">-- Tất cả --</option>
+            <option value="men's clothing">Thời trang nam</option>
+            <option value="women's clothing">Thời trang nữ</option>
+            <option value="jewelery">Trang sức</option>
+            <option value="electronics">Điện tử</option>
+          </select>
+
+          <label>Khoảng giá ($)</label>
+          <div class="hang-2">
+            <input type="number" id="giaTu" name="giaTu" min="0" max="1000" step="1" placeholder="Từ">
+            <input type="number" id="giaDen" name="giaDen" min="0" max="1000" step="1" placeholder="Đến">
+          </div>
+
+          <label for="mauSac">Màu sắc</label>
+          <select id="mauSac" name="mauSac">
+            <option value="">-- Mọi màu --</option>
+            <option>Đen</option><option>Trắng</option><option>Xám</option>
+            <option>Xanh navy</option><option>Hồng</option><option>Bạc</option>
+            <option>Vàng</option><option>Vàng hồng</option>
+          </select>
+
+          <label for="rating">Đánh giá tối thiểu: <output id="hienRating">0</output> sao</label>
+          <input type="range" id="rating" name="rating" min="0" max="5" step="0.5" value="0"
+                 oninput="document.getElementById('hienRating').value = this.value">
+
+          <p id="loiTim" class="loi"></p>
+          <button type="submit" class="btn">Tìm kiếm</button>
+          <button type="reset" class="btn btn-phu">Xóa lọc</button>
+        </fieldset>
+      </form>
+    </aside>
+
+    <main>
+      <section>
+        <h2>Danh sách sản phẩm <small id="demKetQua"></small></h2>
+        <!-- CÂU 3 + 4: lưới sản phẩm, chỉ 1 listener gắn ở #dsSanPham -->
+        <div id="dsSanPham" class="luoi-san-pham"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Hộp "Xem nhanh" và "Rating detail" dùng chung 1 modal -->
+  <div id="modal" class="modal an">
+    <div class="modal-noi-dung">
+      <button type="button" class="dong" onclick="dongModal()">&times;</button>
+      <div id="noiDungModal"></div>
+    </div>
+  </div>
+
+  <!-- CÂU 7: Form thanh toán -->
+  <div id="modalThanhToan" class="modal an">
+    <div class="modal-noi-dung">
+      <button type="button" class="dong" onclick="dongThanhToan()">&times;</button>
+      <h3>Thông tin giao hàng</h3>
+      <!-- Khách đã có tài khoản (customers.json) thì đăng nhập để điền sẵn thông tin -->
+      <div class="dang-nhap-nhanh" id="khungDangNhapKH">
+        <input type="text" id="khUser" placeholder="Tên đăng nhập (VD: an)">
+        <input type="password" id="khPass" placeholder="Mật khẩu (VD: 123456)">
+        <button type="button" class="btn btn-phu" onclick="dangNhapKhachHang()">Đăng nhập</button>
+        <small class="loi" id="loiDangNhapKH"></small>
+      </div>
+      <form id="formThanhToan" novalidate>
+        <label for="ttHoTen">Họ tên</label>
+        <input type="text" id="ttHoTen" name="hoTen" required minlength="3">
+        <small class="loi" id="loiHoTen"></small>
+
+        <label for="ttSdt">Số điện thoại</label>
+        <input type="tel" id="ttSdt" name="sdt" placeholder="VD: 0912345678">
+        <small class="loi" id="loiSdt"></small>
+
+        <label for="ttEmail">Email</label>
+        <input type="email" id="ttEmail" name="email" placeholder="VD: ten@gmail.com">
+        <small class="loi" id="loiEmail"></small>
+
+        <label for="ttDiaChi">Địa chỉ giao hàng</label>
+        <textarea id="ttDiaChi" name="diaChi" rows="2" required></textarea>
+        <small class="loi" id="loiDiaChi"></small>
+
+        <p class="tong">Tổng thanh toán: <b id="ttTong"></b></p>
+        <button type="submit" class="btn">Xác nhận thanh toán</button>
+      </form>
+      <p id="ketQuaThanhToan"></p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>Sinh viên: <b>Nguyễn Trần Đan Lê</b> - MSSV: <b>K244161794</b></p>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/reviews.js"></script>
+  <script src="js/checkout.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
